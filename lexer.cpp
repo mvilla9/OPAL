@@ -1,9 +1,17 @@
+#include "lexer.h"
+
 #include <iterator>
 #include <string>
 
 using namespace std;
 
-const std::string WHITESPACE = " \n";
+const string WHITESPACE = " \n";
+const string SPECIAL_CHARS = ":;(){},=";
+const string OPERATORS = "+-*/";
+const string STRING = "\'\"";
+const string NUMBERS = "[.0-9]";
+const string SYMBOLS = "[_a-zA-Z]";
+
 
 class LexerStream {
     public:
@@ -33,8 +41,13 @@ void lex(string inputStream) {
         char current = lexerStream.incrementForward()[0];
         if (WHITESPACE.find(current) != string::npos) {
             continue;
+        } else if (SPECIAL_CHARS.find(current) != string::npos) {
+
+        } else if (OPERATORS.find(current) != string::npos) {
+
+        } else if (STRING.find(current) != string::npos) {
+
         }
-        // more conditions
     }
 }
 
