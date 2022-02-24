@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include <string>
+#include <regex>
 
 using namespace std;
 
@@ -9,8 +10,8 @@ const string WHITESPACE = " \n";
 const string SPECIAL_CHARS = ":;(){},=";
 const string OPERATORS = "+-*/";
 const string STRING = "\'\"";
-const string NUMBERS = "[.0-9]";
-const string SYMBOLS = "[_a-zA-Z]";
+const regex NUMBERS("[.0-9]");
+const regex SYMBOLS("[_a-zA-Z]");
 
 
 class LexerStream {
@@ -38,7 +39,7 @@ class LexerStream {
 void lex(string inputStream) {
     LexerStream lexerStream = LexerStream(inputStream);
     while (lexerStream.nextStreamReference != inputStream.end()) {
-        char current = lexerStream.incrementForward()[0];
+        string current(1, lexerStream.incrementForward()[0]);
         if (WHITESPACE.find(current) != string::npos) {
             continue;
         } else if (SPECIAL_CHARS.find(current) != string::npos) {
@@ -47,6 +48,12 @@ void lex(string inputStream) {
 
         } else if (STRING.find(current) != string::npos) {
 
+        } else if (regex_match(current, NUMBERS)) {
+
+        } else if (regex_match(current, SYMBOLS)) {
+
+        } else {
+            throw invalid_argument("Character not supported.");
         }
     }
 }
